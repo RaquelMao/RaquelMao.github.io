@@ -67,8 +67,8 @@ ga_domain: huangxuan.me
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "写写代码，做做设计，<br>离开世界之前，一切都是过程"
-sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-about-description: "no time，no money，<br>but beautiful， clever and amazing"
+sidebar-avatar: /img/avatar-raquel.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
@@ -104,18 +104,6 @@ friends: [
     },{
         title: "Ebn's Blog",
         href: "http://ebnbin.com/"
-    },{
-        title: "SmdCn's Blog",
-        href: "http://blog.smdcn.net"
-    },{
-        title: "David's Game",
-        href: "https://www.ruoyaowu.com/"
-    },{
-        title: "DHong Say",
-        href: "http://dhong.co"
-    },{
-        title: "尹峰以为",
-        href: "http://ingf.github.io/"
     },{
         title: "解旻的博客",
         href: "http://xieminis.me/"
