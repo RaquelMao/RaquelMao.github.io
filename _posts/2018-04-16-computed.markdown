@@ -1,0 +1,15 @@
+---
+layout:       post
+title:        "计算属性的setter"
+subtitle:     "vue"
+date:         2018-04-16 14:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - vue
+---
+
+![vue 教程中关于计算属性的截图](/img/in-post/post-computed/setter.png)
+**setter 可以省略，但在有其他地方定义 vm.fullName 值的时候，必须有setter**

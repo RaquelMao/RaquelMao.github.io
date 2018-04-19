@@ -1,0 +1,45 @@
+---
+layout:       post
+title:        "空函数"
+subtitle:     "promise"
+date:         2018-04-12 16:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - promise
+---
+
+```
+ReadProject({ commit }) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(projectFile, 'utf-8').then((data) => {
+      let err;
+      try {
+        const project = JSON.parse(data);
+        commit(UPDATE_PROJECT, project);
+        resolve(project);
+      } catch (e) {
+        err = errorCode.dataFileNotAvailable;
+        reject(new TheiaError(err));
+      }
+    }).catch((err) => {
+      err = errorCode.dataFileNotAvailable;
+      reject(new TheiaError(err));
+    });
+  });
+},
+```
+因为逻辑问题我不想做错误处理，也不想 console.log(error)，所以调用时写了 .catch(); 结果报错。
+```
+const promises = [
+  this.$store.dispatch('ReadProject'),
+  this.$store.dispatch('ReadSettings'),
+];
+Promise.all(promises).then(() => {
+  this.$router.push({ path: '/' });
+})
+.catch(() => {}); // 不能写成 .catch();
+```
+resolve 和 reject 是两个回调函数，不能写成 .catch() 如果这种形式，相当于传入 reject() 是 null，写成 .catch(() => {}) 正确形式，才是返回一个空函数

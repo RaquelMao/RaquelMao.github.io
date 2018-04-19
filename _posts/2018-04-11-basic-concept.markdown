@@ -104,10 +104,53 @@ var floatNum = 3.125e7; // 31250000
 ##### 数值范围
 Number.MIN_VALUE 和 Number.MAX_VALUE，如果超出会自动换成特殊的 Infinity 的值，如果负数就是 -Infinity (负无穷)。可以用 isFinite() 函数判断。
 
-###### NaN
+##### NaN
 即非数值，用来表示本来要返回数值的操作数未返回数值的情况（这样就不会跑出错误）。
 NaN 与任何数值都不相等，可用 isNaN() 来判断，任何不能被转换成数值的值都会导致这个函数返回 true。
 
 ##### 数值转换
 Number()：适用于任何数据类型。如果字符串是空的，则被转换成0；如果字符串不包含数字之类的，就会被转换成 NaN。
 parseInt(), parseFloat()：专门把字符串转换成数值。
+
+#### 6.浮点数
+toString() 方法，转换为字符，可以输出二进制、八进制、十六进制。在不知道值是不是 null 或者 undefined 的情况下，还可以使用 String() 。
+
+#### 7.Object
+Object 每个实例都具有下列属性和方法：
+* constructor：保存着用于创建当前对象的函数
+* hasOwnProperty(propertyName)：检查给定的属性在当前对象实例中是否存在。
+* isPrototypeOf(Object)：用于检查传入的对象是否是当前对象的原型。
+* propertyIsEnumberable(propertyName)：用于检查给定属性能否使用 for-in 来枚举。
+* toLocaleString(), toString(), valueOf()
+
+### 操作符
+
+#### 1.一元操作符
+```
+++ age;
+age = age + 1; // 效果相同
+```
+```
+var num1 = 2;
+var num2 = 20;
+var num3 = --num1 + num2; // 21
+var num4 = num1 + num2; // 21
+```
+```
+var num1 = 2;
+var num2 = 20;
+var num3 = num1-- + num2; // 22
+var num4 = num1 + num2; // 21
+```
+一元加操作符，放在数值前面，不会对数值产生任何影响，在对非数值应用时，会像 Number() 一样对这个值进行转换。
+一元减操作符，放在数值前面，数值变成负数，在对非数值应用时，和加操作符一样，最后再转为负数。
+
+#### 2.位操作符
+ECMAScript 中所有数值都按照 IEEE-754 64位的形式来存储，但未操作符不直接操作64位值，而是先转换成32位，执行操作，然后再转换成64位。
+* ~：按位非，返回反码
+* &：按位与
+* |：按位或
+* ^：按位异或
+* <<：左移，以0填充
+* >>：有符号右移，用符号位填充
+* >>>：无符号右移，由于负数以二进制补码表示，所以结果相差很大
