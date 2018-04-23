@@ -154,3 +154,111 @@ ECMAScript 中所有数值都按照 IEEE-754 64位的形式来存储，但未操
 * <<：左移，以0填充
 * >>：有符号右移，用符号位填充
 * >>>：无符号右移，由于负数以二进制补码表示，所以结果相差很大
+
+#### 3.布尔操作符
+##### ! 非
+```
+!0; // true
+!NaN; // true
+!""; // true
+!undefined; // true
+!null; // true
+```
+##### && 与
+如果第一个操作数能够决定结果，那么就不会对第二个操作数求值。**第二个数即使没有定义也不会报错。**
+##### || 或
+同 &&，不会对第二个操作数求值。
+
+#### 4.乘性操作符 加性操作符 关系操作符
+乘：
+* 超出范围 Infinity -Infinity
+* 一个操作数 NaN，则结果为 NaN
+* Infinity 0，结果为NaN
+* Infinity 非0，Infinity 或 -Infinity
+* 不是数值，后台调用 Number()
+除：
+* 超出范围 Infinity -Infinity
+* 一个操作数 NaN，则结果为 NaN
+* Infinity Infinity，0 0，结果为NaN
+* Infinity 非0，Infinity 或 -Infinity
+* 不是数值，后台调用 Number()
+关系操作符：
+比较两个字符串对应的字符编码值
+
+#### 5.相等操作符
+相等和不相等：**都会先转换操作数**，强制转换，再比较相等性
+全等和不全等：不转换操作数
+
+#### 6.逗号操作符
+用于赋值，总会返回表达式最后一项。
+```
+var num = (1,2,3); // num 为 3
+```
+
+### 语句
+#### 1.
+if
+do-while：后测试循环语句，代码至少被执行一次
+while：前测试循环语句
+for：前测试循环语句
+```
+for (var i = 0; i < 10; i++) {
+  alert(i);
+}
+alert(i); // 10 ECMAScript 中不存在块级作用域。
+```
+for-in：精准迭代语句，可以用来枚举对象的属性。如果需要迭代对象的变量值为 null 或 undefined，会报错。
+
+#### 2.break 和 continue
+break：立刻退出循环，强制执行循环后面的语句
+continue：退出后从循环顶部继续执行
+```
+var num = 0;
+for (var i = 1; i < 10; i++) {
+  if (i % 5 == 0) {
+    break;
+  }
+  num++;
+}
+alert(num); // 4
+```
+```
+var num = 0;
+for (var i = 1; i < 10; i++) {
+  if (i % 5 == 0) {
+    continue;
+  }
+  num++;
+}
+alert(num); // 8
+```
+和 label 连用，返回代码特定位置
+
+#### 3.with
+将代码的作用域设置到一个特定的对象中
+```
+with (location) {
+  var qs = search.substring(1); // location.search.substring(1)
+  var url = href; // location.href
+}
+```
+#### 4.switch
+通过为每个 case 添加 break 语句，避免同时执行多个 case 。假如确实需要混合多种情况，需要添加注释。
+```
+switch (i) {
+  case 25:
+    /* 合并两种情况 */
+  case 35:
+    alert("25 or 35");
+    break;
+  default:
+    alert("other");
+}
+```
+case 可以是常量，变量或表达式。
+
+### 函数
+**参数在内部是用一个数组来表示的，函数体内通过 arguments 对象来访问参数数组，并且它的值永远与对应的参数的值保持同步，但它们的内存空间是独立的。
+如果只传入一个值，那么 arguments[1]，设置的值不会反映到命名参数中，因为 arguments 的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。
+没有传递值的命名参数被自动赋予 undefined 的值。
+没有重载。**
