@@ -47,6 +47,7 @@ alert(message); // hi
 
 ```
 alert(typeof null); // Object。因为特殊值 null 被认为是一个空的对象引用
+alert(typeof undefined); // undefined
 ```
 
 #### 2.Undefined
