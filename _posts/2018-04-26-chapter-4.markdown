@@ -1,0 +1,42 @@
+---
+layout:       post
+title:        "变量、作用域和内存问题"
+subtitle:     "《JavaScript高级程序设计》"
+date:         2018-04-11 13:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - 读书笔记
+---
+### 基本类型和引用类型
+#### 1.复制变量值
+基本类型和引用类型存在不同，基本类型会创建一个新值，引用类型，两个变量引用同一对象，改变其中一个变量，会影响另外一个。
+#### 2.传递参数
+所有函数的参数都是按值传递的，把函数外部的值复制给函数内部的参数，一个局部变量（命名参数，就是 arguments 对象中的一个元素），即使是按值传递的，使用 object 时，也会按引用来访问同一个对象。
+```
+function add(num) {
+  num += 1;
+  return num;
+}
+var count = 20;
+var result = add(count);
+alert(count); // 20
+alert(result); // 30
+```
+```
+function set(obj) {
+  obj.num = 'mm';
+}
+var person = new Object();
+set(person);
+alert(person.name); // 'mm'
+```
+但如果在函数内部重写 obj ，这个变量引用是一个局部对象，会在函数执行完毕后立刻销毁。
+#### 3.检测类型
+```
+alert(person instanceof Object); // person 是 Object 吗？
+```
+
+### 执行环境和作用域
