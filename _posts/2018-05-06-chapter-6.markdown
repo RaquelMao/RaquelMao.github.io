@@ -125,3 +125,4 @@ function sayColor() {
 var objectSayColor = sayColor.bind(o);
 objectSayColor(); // blue
 ```
+### 基本包装类型
