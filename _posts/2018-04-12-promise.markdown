@@ -96,3 +96,124 @@ readFilePromise('path1').then((text1) => {
   console.log(err);
 });
 ```
+```
+handleDeleteUser(user) {
+  this.$confirm(this.$t('confirm-delete'), this.$t('reminder'), {
+    confirmButtonText: this.$t('confirm'),
+    cancelButtonText: this.$t('cancel'),
+    type: 'warning',
+  }).then(() => {
+    removeUser(user.userId).then(() => {
+      this.refresh();
+    }).catch((err) => {
+      this.$message.error(this.$t(kebabCase(err.message)));
+    });
+  }).catch(() => {});
+},
+handleDeleteUser(user) {
+  this.$confirm(this.$t('confirm-delete'), this.$t('reminder'), {
+    confirmButtonText: this.$t('confirm'),
+    cancelButtonText: this.$t('cancel'),
+    type: 'warning',
+  })
+    .then(() => removeUser(user.userId))
+    .then(() => {
+      this.refresh();
+    })
+    .catch((err) => {
+      this.$message.error(this.$t(kebabCase(err.message)));
+    });
+},
+```
+```
+// 当前一个then return promise的时候 后面一个then才会在前一个结束后做
+export function packageProject(project, distZipPath) {
+  return new Promise((resolve, reject) => {
+    const { directory, macros } = project;
+    let includes = [];
+    const name = path.basename(distZipPath, path.extname(distZipPath));
+    const configPath = path.join(path.dirname(distZipPath), `${name}.json`);
+    const projectName = path.basename(directory);
+    const cacheProjectPath = path.join(cacheDirectory, projectName);
+    const dotIncludePath = path.join(cacheProjectPath, '_include');
+    fs.pathExists(cacheProjectPath)
+      .then((exists) => {
+        if (exists) {
+          return fs.remove(cacheProjectPath);
+        }
+        return Promise.resolve();
+      })
+      .then(() => fs.copy(directory, cacheProjectPath))
+      .then(() => fs.ensureDir(dotIncludePath))
+      .then(() => {
+        includes = project.includes.map((include) => {
+          if (path.isAbsolute(include)) {
+            return path.relative(directory, include);
+          }
+          return include;
+        });
+        const promises = [];
+        includes.forEach((include) => {
+          if (!include.startsWith('..')) {
+            return;
+          }
+          const includePath = path.join(dotIncludePath, getEscapePath(include));
+          promises.push(new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+            fs.copy(path.join(directory, include), includePath).then(resolve).catch(resolve);
+          }));
+        });
+        includes = includes.map((include) => {
+          include = include.split(path.sep).join('/');
+          if (include.startsWith('..')) {
+            return path.join('_include', getEscapePath(include));
+          }
+          return include;
+        });
+        return Promise.all(promises);
+      })
+      .then(() => {
+        const config = {
+          headers: includes,
+          system_stub: false,
+          macros,
+          direct_mem_access: false,
+          time_out: 15,
+        };
+        const promises = [
+          fs.writeJson(path.join(cacheProjectPath, 'config.json'), config),
+          fs.writeJson(configPath, config),
+        ];
+        return Promise.all(promises);
+      })
+      .then(() => {
+        const walker = walk.walk(cacheProjectPath, { followLinks: false });
+        const promise = new Promise((resolve, reject) => {
+          walker.on('file', (root, filesStats, next) => {
+            if (path.extname(filesStats.name) !== '.c' && path.extname(filesStats.name) !== '.h') {
+              fs.remove(path.join(root, filesStats.name), () => {
+                next();
+              });
+            } else {
+              next();
+            }
+          }).on('end', () => {
+            resolve();
+          }).on('errors', (root, nodeStatsArray) => {
+            reject(nodeStatsArray);
+          });
+        });
+        return promise;
+      })
+      .then(() => {
+        zipFolder(cacheProjectPath, distZipPath, (err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          fs.remove(cacheProjectPath).then(resolve).catch(reject);
+        });
+      })
+      .catch(reject);
+  });
+}
+```

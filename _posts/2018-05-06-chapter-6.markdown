@@ -2,7 +2,7 @@
 layout:       post
 title:        "引用类型"
 subtitle:     "《JavaScript高级程序设计》"
-date:         2018-04-11 13:00:00
+date:         2018-05-06 13:00:00
 author:       "Raquel"
 header-img:   "img/post-bg-2015.jpg"
 header-mask:  0.3
@@ -126,3 +126,4 @@ var objectSayColor = sayColor.bind(o);
 objectSayColor(); // blue
 ```
 ### 基本包装类型
+……

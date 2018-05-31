@@ -1,0 +1,75 @@
+---
+layout:       post
+title:        "函数表达式"
+subtitle:     "《JavaScript高级程序设计》"
+date:         2018-05-16 13:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - 读书笔记
+---
+```
+function functionName() {}
+```
+函数声明，特征：函数声明提升
+```
+var functionName = function() {};
+```
+函数表达式，这种情况下创建的函数叫匿名函数，
+
+#### 闭包
+闭包是指有权限访问另一个函数作用域中变量的函数。
+
+一个函数的作用域链，包含两个变量对象：本地活动对象和全局变量对象，一般来说，函数执行完成，局部活动对象就会被销毁，内存中仅保存全局作用域，但闭包的情况有所不同。
+在匿名函数从 functionA（外层）中被返回后，它的作用域链被初始化为包含 function 函数的活动对象和全局变量对象，匿名函数可以访问 functionA 中定义的所有变量。
+functionA 在执行完毕后，其活动对象也不会被销毁，因为匿名函数的作用域链仍然在引用这个活动对象，知道匿名函数被销毁，functionA 的活动对象才会被销毁。
+```
+var c = functionA();
+var result = c();
+c = null; // 解除对匿名函数的引用
+```
+
+##### 闭包和变量
+```
+function createFunctions() {
+  var result = new Array();
+  for (var i=0; i < 10; i++) {
+    result[i] = function() {
+      return i;
+    };
+  }
+  return result;
+}
+```
+闭包只能取得包含函数中任何变量的最后一个值，因为因为每个函数的作用域中都保存着 functionA 函数的活动对象，所以随便引用几次，都是同一个变量 i 。
+通过创建另一个匿名函数强制让闭包行为符合预期：
+```
+function createFunctions() {
+  var result = new Array();
+  for (var i=0; i < 10; i++) {
+    result[i] = function(num) {
+      return function() {
+        return num;  
+      };
+    }(i);
+  }
+  return result;
+}
+```
+把变量 i 的当前值赋值给 num。
+
+##### this
+**this 对象是运行时基于函数的执行环境绑定的**
+匿名函数的执行环境具有全局性，因此 this 对象通常指向 window 。因为，每个函数在被调用时，都会取得两个特殊变量： this 和 arguments 。内部函数在搜索这两个变量时，只会搜索到其活动对象为止，因此不会访问外部函数的两个变量。
+
+### 块级作用域
+```
+(function() {
+  //块级作用域  
+})();
+```
+### 私有变量
+任何在函数中定义的变量，都可以认为是私有变量。
+……

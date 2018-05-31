@@ -2,7 +2,7 @@
 layout:       post
 title:        "变量、作用域和内存问题"
 subtitle:     "《JavaScript高级程序设计》"
-date:         2018-04-11 13:00:00
+date:         2018-04-26 13:00:00
 author:       "Raquel"
 header-img:   "img/post-bg-2015.jpg"
 header-mask:  0.3
@@ -40,3 +40,4 @@ alert(person instanceof Object); // person 是 Object 吗？
 ```
 
 ### 执行环境和作用域
+……
