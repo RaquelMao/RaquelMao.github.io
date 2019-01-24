@@ -1,0 +1,34 @@
+---
+layout:       post
+title:        "BOM"
+subtitle:     "bug"
+date:         2018-06-02 13:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - 笔记
+---
+#####
+
+文档对象模型 (DOM) 是HTML和XML文档的编程接口。它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构，样式和内容。DOM 将文档解析为一个由节点和对象（包含属性和方法的对象）组成的结构集合。简言之，它会将web页面和脚本或程序语言连接起来。
+
+开始的时候，JavaScript和DOM是交织在一起的，但它们最终演变成了两个独立的实体。JavaScript可以访问和操作存储在DOM中的内容，因此我们可以写成这个近似的等式：
+API (web 或 XML 页面) = DOM + JS (脚本语言)
+
+下面是在web和XML页面脚本中使用DOM时，一些常用的API简要列表。
+
+document.getElementById(id)
+document.getElementsByTagName(name)
+document.createElement(name)
+parentNode.appendChild(node)
+element.innerHTML
+element.style.left
+element.setAttribute()
+element.getAttribute()
+element.addEventListener()
+window.content
+window.onload
+window.dump()
+window.scrollTo()

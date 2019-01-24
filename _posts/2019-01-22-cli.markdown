@@ -1,0 +1,143 @@
+---
+layout:       post
+title:        "脚手架"
+subtitle:     "配置"
+date:         2019-01-22 13:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - cli
+    - eslint
+    - babel
+---
+#####
+###### 创建一个 node 项目
+```
+npm init -y
+```
+在 package.json 中添加代码
+```
+"bin": {
+  "learn": "./bin/learn.js" // "learn": we can use project name, such as "smart-testing"
+}
+```
+创建 bin 目录和 learn.js 文件
+./bin/learn.js:
+```
+#!/usr/bin/env node
+console.log('Hello, world!');
+```
+通过终端进入到项目的根目录执行 npm link,添加了软链,在命令行中输入 learn 试一下
+
+###### 配置 eslint
+```
+npm i eslint -D
+```
+初始化 eslint 在项目的根目录下执行 ./node_modules/.bin/eslint --init
+1.Use a popular style guide
+2.Airbnb
+3.Do you use React? 写 n 然后回车.
+.eslintrc.js
+```
+module.exports = {
+    "extends": "airbnb-base",
+    "parser": 'babel-eslint',
+    'rules': {
+        'global-require': 0,
+        'import/no-unresolved': 0,
+        'no-param-reassign': 0,
+        'no-shadow': 0,
+        'import/extensions': 0,
+        'import/newline-after-import': 0,
+        'no-multi-assign': 0,
+        'no-unused-expressions': ['error', { 'allowTernary': true }],
+        // allow debugger during development
+        'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    },
+    // jest
+    "plugins": ["jest"],
+    "env": {
+        "jest/globals": true
+    }
+};
+```
+package.json
+```
+"scripts": {
+    "lint": "eslint ./src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+```
+```
+npm run lint
+```
+
+###### babel
+####### plan A: import
+首先, 安装依赖
+```
+npm i @babel/core@7.1.6 babel-core@^6.26.3 babel-plugin-transform-es2015-modules-commonjs@6.26.2 babel-polyfill@6.26.0 babel-preset-env@1.7.0 babel-preset-latest-node@2.0.2 babel-register@6.26.0 -S
+```
+在项目的根目录中添加 .babelrc 在该文件中粘贴以下内容
+```
+{
+    "presets": ["env"],
+    "plugins": ["transform-es2015-modules-commonjs"]
+}
+```
+创建入口文件 index.js 并粘贴以下内容
+```
+require('babel-register');
+const babel = require('@babel/core');
+const babelPresetLatestNode = require('babel-preset-latest-node');
+
+babel.transform('code();', {
+  presets: [[babelPresetLatestNode, {
+    target: 'current',
+  }]],
+});
+
+require('babel-polyfill');
+require('./src');
+```
+创建 src 目录, 并添加 index.js a.js 文件, 文件内容如下
+```
+// index.js
+import a from './a';
+a.a();
+
+// a.js
+export default {
+  a() {
+    console.log('12345');
+  },
+};
+```
+此时执行 node index.js ,顺利打印出 12345
+最后改造 bin/learn.js 内容如下:
+```
+#!/usr/bin/env node
+require('../'); // 执行入口文件
+```
+此时在命令行中执行 learn,顺利打印出 12345
+
+####### plan B: require
+```
+npm install --save-dev babel-cli babel-preset-env
+```
+创建 .babelrc 文件
+```
+{
+  "presets": ["env"]
+}
+```
+
+##### git cz
+```
+npm install -g commitizen
+```
+```
+commitizen init cz-conventional-changelog --save --save-exact
+```
