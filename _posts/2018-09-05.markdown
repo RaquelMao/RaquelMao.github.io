@@ -1,0 +1,73 @@
+---
+layout:       post
+title:        "路由"
+subtitle:     "vue-route"
+date:         2018-09-05 13:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - route
+---
+#####
+
+1.考虑用户直接复制了一个网址进行跳转
+2.考虑用户直接复制了一个网址进行跳转，但实际当前用户并没有权限进入
+3.考虑刷新
+
+```
+子页面：判断是否有权限，没有的话将当前路由传入 query
+if (!this.hasReadAccess) {
+  this.$router.replace({
+    path: '/',
+    query: { redirect: this.$route.path },
+  });
+  return;
+}
+
+父页面：变量 redirect，如果 query 中有数据则用 query 中的，如果 query 中没有数据，则 redirect 等于当前路径，然后再进行权限判断
+
+redirect：用于最后跳转
+defaultActiveIndex：用于辅助和 elementUI 视图高亮所需的参数
+
+let redirect = this.$route.query.redirect || this.$route.path;
+this.defaultActiveIndex = `/${redirect.split('/')[1]}`;
+switch (this.defaultActiveIndex) {
+  case '/users':
+    if (!this.$store.getters.access.userOperation) {
+      redirect = '/';
+    }
+    break;
+  case '/servers':
+    if (!this.$store.getters.access.serverOperation) {
+      redirect = '/';
+    }
+    break;
+  case '/documents':
+    if (!this.$store.getters.access.documentOperation) {
+      redirect = '/';
+    }
+    break;
+  case '/products':
+    if (!this.$store.getters.access.productOperation) {
+      redirect = '/';
+    }
+    break;
+  default:
+    break;
+}
+if (!redirect || redirect === '/') {
+  if (this.$store.getters.access.userOperation) {
+    redirect = '/users';
+  } else if (this.$store.getters.access.serverOperation) {
+    redirect = '/servers';
+  } else if (this.$store.getters.access.documentOperation) {
+    redirect = '/documents';
+  } else if (this.$store.getters.access.productOperation) {
+    redirect = '/products';
+  }
+  this.defaultActiveIndex = redirect;
+}
+this.$router.replace({ path: redirect });
+```
