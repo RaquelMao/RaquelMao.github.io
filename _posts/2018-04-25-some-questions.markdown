@@ -106,3 +106,11 @@ html 无法解析 \n
 
 ###### 9.const 好处
 可以把逻辑错误变成运行错误
+
+###### 10.git删除提交历史
+```
+git filter-branch --force --index-filter 'git rm -rf --cached --ignore-unmatch test/test-projects/projectB' --prune-empty --tag-name-filter cat -- --all
+```
+```
+git push origin --force --all
+```

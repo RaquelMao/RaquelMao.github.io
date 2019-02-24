@@ -30,6 +30,9 @@ npm init -y
 console.log('Hello, world!');
 ```
 通过终端进入到项目的根目录执行 npm link,添加了软链,在命令行中输入 learn 试一下
+```
+npm link
+```
 
 ###### 配置 eslint
 ```
@@ -126,6 +129,10 @@ require('../'); // 执行入口文件
 ####### plan B: require
 ```
 npm install --save-dev babel-cli babel-preset-env
+npm install --save-dev babel-preset-es2015 // 可以试一下 还没测试过区别
+```
+```
+"build": "npm run lint && babel ./src -d ./lib",
 ```
 创建 .babelrc 文件
 ```
