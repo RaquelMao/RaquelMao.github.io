@@ -1,0 +1,45 @@
+---
+layout:       post
+title:        "tips"
+subtitle:     "web"
+date:         2019-05-04 13:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - web
+---
+https://juejin.im/post/5c64d15d6fb9a049d37f9c20
+### css
+#### 1.盒模型
+ - content-box：
+ W3C 属性 width, height 只包含内容 content，不包含 border 和 padding， 即
+ **width = 内容的宽度，height = 内容的高度**
+ - border-box：
+ IE 属性 width, height 包含 border 和 padding，指的是 content + padding + border， 即
+ **width = border + padding + 内容的宽度，height = border + padding + 内容的高度**
+ - padding-box
+ - margin-box
+
+#### 2.BFC
+块格式化上下文
+参考：https://juejin.im/post/59b73d5bf265da064618731d
+```
+<div class='box'>
+    <div class='left'> </div>
+    <div class='right'> </div>
+</div>
+```
+**BFC 可以闭合（包含起来）浮动：子元素 left 浮动，父元素 box 也设置成BFC（overflow：hidden），可以隔离浮动：同级的 right 设置成 BFC**
+
+BFC的创建方法
+ - 根元素或其它包含它的元素；
+ - 浮动 (元素的float不为none)；
+ - 绝对定位元素 (元素的position为absolute或fixed)；
+ - 行内块inline-blocks(元素的 display: inline-block)；
+ - 表格单元格(元素的display: table-cell，HTML表格单元格默认属性)；
+ - overflow的值不为visible的元素；
+ - 弹性盒 flex boxes (元素的display: flex或inline-flex)；
+
+**但其中，最常见的就是overflow:hidden、float:left/right、position:absolute**

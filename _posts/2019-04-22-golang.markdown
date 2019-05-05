@@ -1,0 +1,14 @@
+---
+layout:       post
+title:        "tips"
+subtitle:     "golang"
+date:         2019-01-22 13:00:00
+author:       "Raquel"
+header-img:   "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog:      true
+tags:
+    - golang
+---
+##### 1.sql: unknown driver "sqlite3" (forgotten import?)
+import _ "github.com/mattn/go-sqlite3"

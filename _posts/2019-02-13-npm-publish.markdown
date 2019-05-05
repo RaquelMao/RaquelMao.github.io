@@ -12,6 +12,14 @@ tags:
     - npm package
     - npm publish
 ---
+#### 解决 git 上版本号过多的问题
+**Publish 和 commit
+1.修改代码
+2.commit
+3.publish
+4.从代码改动处检出新分支xx-temp 删除旧分支xx 拉去远程分支xx 合并新分支xx-temp到新拉取的分支xx
+5.push**
+
 ##### 1.创建项目
 ```
 npm init -y
