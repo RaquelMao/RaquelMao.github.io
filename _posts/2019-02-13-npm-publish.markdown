@@ -2,7 +2,7 @@
 layout:       post
 title:        "·¢²¼ npm °ü"
 subtitle:     "ÅäÖÃ"
-date:         2019-01-22 13:00:00
+date:         2019-02-13 13:00:00
 author:       "Raquel"
 header-img:   "img/post-bg-2015.jpg"
 header-mask:  0.3

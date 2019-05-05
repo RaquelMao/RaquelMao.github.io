@@ -1,6 +1,6 @@
 ---
 layout:       post
-title:        "BOM"
+title:        "bug"
 subtitle:     "bug"
 date:         2018-05-20 13:00:00
 author:       "Raquel"
@@ -10,7 +10,5 @@ catalog:      true
 tags:
     - bug
 ---
-#####
-
 electron 的 showOpenDialog，当打开的是文件夹而不是文件时，在 windows 平台，不会展示文件
 https://github.com/electron/electron/issues/9612
